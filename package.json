@@ -29,17 +29,12 @@
     "homepage": "https://github.com/analyticsengines/angular.leaflet/#readme",
     "devDependencies": {},
     "peerDependencies": {
-        "typescript": "",
-        "@angular/common": "",
-        "@angular/compiler": "",
-        "@angular/core": "",
-        "@angular/http": "",
-        "@angular/platform-browser": "",
-        "@angular/platform-browser-dynamic": "",
-        "rxjs": "",
-        "zone.js": ""
     },
     "dependencies": {
+        "rxjs": "",
+        "zone.js": "",
+        "@angular/core": "",
+        "typescript": "",
         "leaflet": "",
         "leaflet.markercluster": "",
         "leaflet.markercluster.layersupport": "",
