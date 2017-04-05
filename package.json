@@ -5,7 +5,9 @@
   "main": "release/index.js",
   "typings": "release/index.d.ts",
   "scripts": {
-    "package:ts": "tsc --outDir release"
+    "package:ts": "tsc --outDir release",
+    "package": "npm run package:ts",
+    "postinstall": "npm run package"
   },
   "repository": {
     "type": "git",
