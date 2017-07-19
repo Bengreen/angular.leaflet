@@ -71,7 +71,13 @@ export class LeafletMarker {
         // Update the marker
         const latlngChange = changes['latlng'];
         const optionsChange = changes['options'];
-        this.marker = L.marker(latlngChange.currentValue, optionsChange.currentValue);
+        if (latlngChange && optionsChange) {
+            this.marker = L.marker(latlngChange.currentValue, optionsChange.currentValue);
+        } else if (latlngChange) {
+            this.marker = L.marker(latlngChange.currentValue, this.options);
+        } else if (optionsChange) {
+            this.marker = L.marker(this.latlng, optionsChange.currentValue);
+        }
         // TODO: Expand this out to handle the updates to the markerCluster
     }
     ngOnDestroy() {
