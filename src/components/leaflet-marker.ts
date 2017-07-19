@@ -68,11 +68,11 @@ export class LeafletMarker {
 
 
     ngOnChanges(changes: SimpleChanges) {
-        if (this.marker) {
-            // TODO: Expand this out to handle the updates to the markerCluster
-            console.error("TODO ngOnChanges for ", changes);
-            throw new Error("ngChanges not implemented for Marker");
-        }
+        // Update the marker
+        const latlngChange = changes['latlng'];
+        const optionsChange = changes['options'];
+        this.marker = L.marker(latlngChange.currentValue, optionsChange.currentValue);
+        // TODO: Expand this out to handle the updates to the markerCluster
     }
     ngOnDestroy() {
         if (this.markerCluster) {
