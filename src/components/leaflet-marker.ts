@@ -71,15 +71,18 @@ export class LeafletMarker {
         // Update the marker
         const latlngChange = changes['latlng'];
         const optionsChange = changes['options'];
-        if (latlngChange) {
-            this.marker.setLatLng(latlngChange.currentValue);
+        if (this.marker) {
+            if (latlngChange) {
+                this.marker.setLatLng(latlngChange.currentValue);
+            }
+            if (optionsChange) {
+                this.marker.setZIndexOffset(optionsChange.currentValue['zIndexOffset']);
+                this.marker.setIcon(optionsChange.currentValue['icon']);
+                this.marker.setOpacity(optionsChange.currentValue['opacity']);
+            }
+        } else {
+            console.warn("Attempting to change non-existant marker");
         }
-        if (optionsChange) {
-            this.marker.setZIndexOffset(optionsChange.currentValue['zIndexOffset']);
-            this.marker.setIcon(optionsChange.currentValue['icon']);
-            this.marker.setOpacity(optionsChange.currentValue['opacity']);
-        }
-        // TODO: Expand this out to handle the updates to the markerCluster
     }
     ngOnDestroy() {
         if (this.markerCluster) {
