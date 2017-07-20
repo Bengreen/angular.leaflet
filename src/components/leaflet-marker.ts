@@ -71,15 +71,13 @@ export class LeafletMarker {
         // Update the marker
         const latlngChange = changes['latlng'];
         const optionsChange = changes['options'];
-        if (latlngChange && optionsChange) {
-            this.marker = null;
-            this.marker = L.marker(latlngChange.currentValue, optionsChange.currentValue);
-        } else if (latlngChange) {
-            this.marker = null;
-            this.marker = L.marker(latlngChange.currentValue, this.options);
-        } else if (optionsChange) {
-            this.marker = null;
-            this.marker = L.marker(this.latlng, optionsChange.currentValue);
+        if (latlngChange) {
+            this.marker.setLatLng(latlngChange.currentValue);
+        }
+        if (optionsChange) {
+            this.marker.setZIndexOffset(optionsChange.currentValue['zIndexOffset']);
+            this.marker.setIcon(optionsChange.currentValue['icon']);
+            this.marker.setOpacity(optionsChange.currentValue['opacity']);
         }
         // TODO: Expand this out to handle the updates to the markerCluster
     }
