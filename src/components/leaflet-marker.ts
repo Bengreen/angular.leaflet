@@ -71,17 +71,28 @@ export class LeafletMarker {
         // Update the marker
         const latlngChange = changes['latlng'];
         const optionsChange = changes['options'];
-        if (latlngChange && optionsChange) {
-            this.marker = null;
-            this.marker = L.marker(latlngChange.currentValue, optionsChange.currentValue);
-        } else if (latlngChange) {
-            this.marker = null;
-            this.marker = L.marker(latlngChange.currentValue, this.options);
-        } else if (optionsChange) {
-            this.marker = null;
-            this.marker = L.marker(this.latlng, optionsChange.currentValue);
+
+        if (latlngChange || optionsChange) {
+            // Remove the old marker
+            if (this.markerCluster) {
+                this.markerCluster.markerClusterGroupSupport.removeLayer(this.marker);
+            }
+            if (this.layerGroup) {
+                this.layerGroup.layerGroup.removeLayer(this.marker);
+            }  else {
+                //This is a catch all since the leafletMap is a required element of the component
+                this.leafletMap.map.removeLayer(this.marker);
+            }
+
+            // Add a new one
+            if (latlngChange && optionsChange) {
+                this.marker = L.marker(latlngChange.currentValue, optionsChange.currentValue);
+            } else if (latlngChange) {
+                this.marker = L.marker(latlngChange.currentValue, this.options);
+            } else {
+                this.marker = L.marker(this.latlng, optionsChange.currentValue);
+            }
         }
-        // TODO: Expand this out to handle the updates to the markerCluster
     }
     ngOnDestroy() {
         if (this.markerCluster) {
