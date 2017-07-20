@@ -80,8 +80,6 @@ export class LeafletMarker {
                 this.marker.setIcon(optionsChange.currentValue['icon']);
                 this.marker.setOpacity(optionsChange.currentValue['opacity']);
             }
-        } else {
-            console.warn("Attempting to change non-existant marker");
         }
     }
     ngOnDestroy() {
