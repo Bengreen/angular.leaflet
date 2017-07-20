@@ -22,6 +22,7 @@ import 'leaflet.markercluster';
 export class LeafletMarker {
     @Input() latlng: L.LatLng;
     @Input() options?: L.MarkerOptions;
+    @Input() revertDrag: boolean = true;
 
     @Output() click = new EventEmitter();
     @Output() dblclick = new EventEmitter();
@@ -52,6 +53,14 @@ export class LeafletMarker {
             'mouseout': event => this.mouseout.emit(event),
             'contextmenu': event => this.contextmenu.emit(event),
         });
+
+        if (this.revertDrag) {
+            this.marker.on({
+                'moveend': event => {
+                    this.marker.setLatLng(this.latlng);
+                }
+            });
+        }
 
         if (this.markerCluster) {
             this.markerCluster.markerClusterGroupSupport.addLayer(this.marker);
