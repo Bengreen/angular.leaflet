@@ -73,11 +73,9 @@ export class LeafletMarker {
         const optionsChange = changes['options'];
         if (this.marker) {
             if (latlngChange) {
-                console.log('Updating marker pos');
                 this.marker.setLatLng(latlngChange.currentValue);
             }
             if (optionsChange) {
-                console.log('Updating marker icon');
                 this.marker.setIcon(optionsChange.currentValue['icon']);
             }
         }
