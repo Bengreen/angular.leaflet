@@ -51,5 +51,9 @@ export class LeafletMap {
         this.map.removeControl(this.layerControl);
     }
 
-
+    public openPopup(popup: L.Popup) {
+        if (this.map) {
+            this.map.openPopup(popup)
+        }
+    }
 };
