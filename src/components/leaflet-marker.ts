@@ -22,6 +22,7 @@ import 'leaflet.markercluster';
 export class LeafletMarker {
     @Input() latlng: L.LatLng;
     @Input() options?: L.MarkerOptions;
+    @Input() revertDrag: boolean = true;
 
     @Output() click = new EventEmitter();
     @Output() dblclick = new EventEmitter();
@@ -53,6 +54,14 @@ export class LeafletMarker {
             'contextmenu': event => this.contextmenu.emit(event),
         });
 
+        if (this.revertDrag) {
+            this.marker.on({
+                'moveend': event => {
+                    this.marker.setLatLng(this.latlng);
+                }
+            });
+        }
+
         if (this.markerCluster) {
             this.markerCluster.markerClusterGroupSupport.addLayer(this.marker);
         }
@@ -71,14 +80,14 @@ export class LeafletMarker {
         // Update the marker
         const latlngChange = changes['latlng'];
         const optionsChange = changes['options'];
-        if (latlngChange && optionsChange) {
-            this.marker = L.marker(latlngChange.currentValue, optionsChange.currentValue);
-        } else if (latlngChange) {
-            this.marker = L.marker(latlngChange.currentValue, this.options);
-        } else if (optionsChange) {
-            this.marker = L.marker(this.latlng, optionsChange.currentValue);
+        if (this.marker) {
+            if (latlngChange) {
+                this.marker.setLatLng(latlngChange.currentValue);
+            }
+            if (optionsChange) {
+                this.marker.setIcon(optionsChange.currentValue['icon']);
+            }
         }
-        // TODO: Expand this out to handle the updates to the markerCluster
     }
     ngOnDestroy() {
         if (this.markerCluster) {
